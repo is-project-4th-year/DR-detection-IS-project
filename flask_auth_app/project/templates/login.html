@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="centered-card">
+    <h2>Welcome Back!</h2>
+    <p>Login to your account</p>
+    <form method="POST" action="{{ url_for('auth.login_post') }}">
+        <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label><input type="checkbox" name="remember"> Remember me</label>
+            <a href="#" style="font-size: 0.95em;">Forgot password?</a>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="form-btn">Login</button>
+        </div>
+        <div style="margin: 18px 0;">OR</div>
+        <button type="button" class="form-btn form-btn-secondary">Login with Google</button>
+        <div style="margin-top: 18px;">
+            Don't have an account? <a href="{{ url_for('auth.signup') }}">Create an account</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
