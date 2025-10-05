@@ -72,4 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
             showPreview(e.dataTransfer.files[0]);
         }
     });
+
+   
 });

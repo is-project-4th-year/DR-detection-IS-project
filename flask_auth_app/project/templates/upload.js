@@ -2,26 +2,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropzone = document.getElementById('dropzone');
     const fileInput = dropzone.querySelector('input[type="file"]');
     const submitBtn = document.getElementById('submitBtn');
-    let fileSelected = false;
 
-    dropzone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', () => {
-        fileSelected = fileInput.files.length > 0;
-        submitBtn.disabled = !fileSelected;
+    // Enable submit button when a file is selected
+    fileInput.addEventListener('change', function () {
+        submitBtn.disabled = !fileInput.files.length;
     });
 
-    dropzone.addEventListener('dragover', (e) => {
+    // Drag over
+    dropzone.addEventListener('dragover', function (e) {
         e.preventDefault();
+        e.stopPropagation();
         dropzone.classList.add('dragover');
     });
-    dropzone.addEventListener('dragleave', () => {
+
+    // Drag leave
+    dropzone.addEventListener('dragleave', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         dropzone.classList.remove('dragover');
     });
-    dropzone.addEventListener('drop', (e) => {
+
+    // Drop
+    dropzone.addEventListener('drop', function (e) {
         e.preventDefault();
+        e.stopPropagation();
         dropzone.classList.remove('dragover');
-        fileInput.files = e.dataTransfer.files;
-        fileSelected = fileInput.files.length > 0;
-        submitBtn.disabled = !fileSelected;
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            fileInput.files = e.dataTransfer.files;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Clicking the dropzone triggers file input
+    dropzone.addEventListener('click', function () {
+        fileInput.click();
     });
 });
