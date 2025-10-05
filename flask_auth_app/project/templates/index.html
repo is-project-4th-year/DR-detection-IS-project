@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="landing-title">Revolutionizing<br>Diabetic Retinopathy Detection</h1>
+    <p class="landing-subtitle">AI-powered insights for early diagnosis and better patient outcomes.</p>
+    <div class="landing-actions">
+        <a href="{{ url_for('auth.login') }}" class="landing-btn landing-btn-primary">Log In</a>
+        <a href="{{ url_for('auth.signup') }}" class="landing-btn">Sign Up</a>
+    </div>
+{% endblock %}

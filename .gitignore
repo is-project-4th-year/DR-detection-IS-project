@@ -3,4 +3,4 @@ drvenv
 __pycache__
 env.py
 versions
-alembic.inipu
+alembic.ini
