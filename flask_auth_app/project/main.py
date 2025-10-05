@@ -1,8 +1,23 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from . import db
+import os
+import datetime
+
+# Import your model inference functions
+from .model_inference import load_model, predict_image
 
 main = Blueprint('main', __name__)
+
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# Load model once at startup
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'dr_model.pth')
+model = load_model(MODEL_PATH)
+
+# Store recent images in a simple list (for demo; use DB for production)
+recent_images = []
 
 @main.route('/')
 def index():
@@ -20,14 +35,27 @@ def profile():
 @main.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    recent_images = [
-        {"name": "Fundus Image 1", "uploaded": "2025-09-01", "status": "Analyzed"},
-        {"name": "Fundus Image 2", "uploaded": "2025-08-30", "status": "Pending"},
-        {"name": "Fundus Image 3", "uploaded": "2025-08-28", "status": "Error"},
-    ]
+    global recent_images
+    prediction = None
     if request.method == 'POST':
-        # handle file upload here
-        flash('Image uploaded successfully!')
-        return redirect(url_for('main.upload'))
-    return render_template('upload.html', recent_images=recent_images)
+        file = request.files.get('image')
+        if file and file.filename:
+            filename = file.filename
+            filepath = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(filepath)
+            pred_class = predict_image(filepath, model)
+            class_names = ['No DR', 'Mild', 'Moderate', 'Severe', 'Proliferative']
+            prediction = f"Prediction: {class_names[pred_class]}"
+            # Add to recent images (keep only last 4)
+            recent_images.insert(0, {
+                "name": filename,
+                "uploaded": "Now",
+                "status": "Analyzed",
+                "img_url": url_for('static', filename=f'uploads/{filename}'),
+                "prediction": class_names[pred_class]
+            })
+            recent_images = recent_images[:4]
+        else:
+            flash('No file selected!')
+    return render_template('upload.html', recent_images=recent_images, prediction=prediction)
 

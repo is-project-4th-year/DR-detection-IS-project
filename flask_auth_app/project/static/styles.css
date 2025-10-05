@@ -167,9 +167,13 @@ body::before {
     border-radius: 12px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     padding: 40px 32px;
-    max-width: 900px;
+    max-width: 700px;
     margin: 40px auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .upload-dropzone {
     border: 2px dashed #d1d5db;
@@ -180,6 +184,15 @@ body::before {
     color: #888;
     cursor: pointer;
     transition: border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 180px;   /* or try 160px, adjust as needed */
+    max-width: 420px;    /* optional: limit width */
+    padding: 24px 12px;  /* optional: adjust padding */
+    margin: 32px auto 0 auto; /* top margin for spacing, auto for horizontal centering */
 }
 .upload-dropzone.dragover {
     border-color: #23408e;
@@ -332,4 +345,54 @@ body::before {
 .landing-btn:hover {
     background: #23408e;
     color: #fff;
+}
+
+<<<<<<< Updated upstream
+@media print {
+    .navbar, .upload-btn, .nav-btn, .footer { display: none !important; }
+    .results-card { box-shadow: none; border: none; }
+=======
+/* Center content in the dropzone */
+.upload-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 180px;   /* or try 160px, adjust as needed */
+    max-width: 420px;    /* optional: limit width */
+    padding: 24px 12px;  /* optional: adjust padding */
+}
+
+/* Style for the preview image */
+.upload-dropzone img.preview-image {
+    display: block;
+    margin: 24px auto 0 auto;
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    object-fit: cover;
+}
+
+/* Remove preview button styling */
+.remove-preview-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: #fff;
+    border: none;
+    color:#23408e;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+>>>>>>> Stashed changes
 }
