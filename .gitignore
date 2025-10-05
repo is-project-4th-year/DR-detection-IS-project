@@ -4,3 +4,4 @@ __pycache__
 env.py
 versions
 alembic.ini
+flask_auth_app/project/static/uploads/
