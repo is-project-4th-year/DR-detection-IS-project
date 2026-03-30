@@ -1,0 +1,4 @@
+/*source drvenv/Scripts/activate
+cd flask_auth_app
+export FLASK_APP=project
+export FLASK_DEBUG=1*/

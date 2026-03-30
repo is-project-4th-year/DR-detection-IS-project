@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+@media print {
+    .navbar, .footer, .upload-btn, .nav-btn, .image-card form { display: none !important; }
+    body { background: #fff !important; }
+}
+</style>
+<div class="results-card">
+    <h2>Diabetic Retinopathy Detection Results</h2>
+    <div class="results-section">
+        <div>
+            <h4>Uploaded Fundus Image</h4>
+            <img src="{{ img.img_url }}" alt="{{ img.name }}" style="max-width:220px;max-height:220px;border-radius:8px;box-shadow:0 1px 8px rgba(0,0,0,0.08);">
+        </div>
+        <div>
+            <h4>Diagnosis Status:</h4>
+            <span class="image-status status-analyzed">{{ img.prediction }}</span>
+            <!-- Add more details here if you want -->
+        </div>
+    </div>
+    <div class="recommendations-section" style="margin-top:32px;">
+        <h3>Recommendations <button onclick="window.print()" style="float:right;">Print Summary</button></h3>
+        <div>
+            {% for rec in recommendations %}
+            <div class="recommendation-card" contenteditable="true" style="background:#f8fafc;margin-bottom:12px;padding:12px;border-radius:8px;">
+                <strong>{{ rec.title }}</strong>
+                <div>{{ rec.desc }}</div>
+                <span class="priority-{{ rec.priority|lower }}">{{ rec.priority }} Priority</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Add more sections as in your screenshots -->
+</div>
+{% endblock %}
